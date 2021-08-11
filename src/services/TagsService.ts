@@ -4,7 +4,7 @@ import { ProjectsTagsService } from './ProjetoTagsService';
 
 class TagsService{
 
-    async Create(title:string,projectId:number){
+    async Create(title:string,projectId){
 
         try{
             const tagsRepository = getCustomRepository(TagsRepository);

@@ -96,7 +96,7 @@ class ProjectService{
         }
     }
 
-    async GetInfoProjectsById(projectId:number){
+    async GetInfoProjectsById(projectId){
         
         const project = await getCustomRepository(ProjetoRepository)
         .createQueryBuilder("projects")
@@ -106,7 +106,7 @@ class ProjectService{
         return project;
     }
 
-    async GetAllProjectsByUserId(userId:number){
+    async GetAllProjectsByUserId(userId){
        
         const userProjectsService = new UserProjectsService();
         const allProjectsIds = await userProjectsService.GetAllProjectsByUserId(userId);
@@ -127,7 +127,7 @@ class ProjectService{
     
     }
 
-    async GetAllActivitiesByProjectId(projectId:number){
+    async GetAllActivitiesByProjectId(projectId){
         
         const projetoAtividadeService = new ProjetoAtividadeService();
         const allActivitiesIds = await projetoAtividadeService.GetAllActivitiesByProjectId(projectId);
