@@ -59,7 +59,7 @@ class UserController{
         const userService = new UserService();
         
         try{          
-            const user = await userService.GetInfoUserById(Number.parseInt(id));
+            const user = await userService.GetInfoUserById(id);
             return response.status(200).json(user);
         }
         catch ( err ){
