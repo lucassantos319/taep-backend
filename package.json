@@ -16,7 +16,8 @@
     "md5": "^2.3.0",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.34"
+    "typeorm": "^0.2.34",
+    "ts-node-dev": "^1.1.6"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
