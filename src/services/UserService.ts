@@ -54,7 +54,7 @@ class UserService{
 
     }
 
-    async GetInfoUserById(id: number){
+    async GetInfoUserById(id){
        
         console.log(id);
         const user = await getCustomRepository(UserRepository)
