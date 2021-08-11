@@ -13,7 +13,6 @@ class ProjetoController{
         const projectService = new ProjectService();
         try {
             const projeto = await projectService.Create({title,description,objective,userId});
-            console.log(projeto);
             return response.json(projeto);
 
 
@@ -159,7 +158,7 @@ class ProjetoController{
             const {title,description} = request.body;
             const projectIdNumber = projectId;
             
-            const atividade = await atividadeService.Create({titulo:title,descricao:description,projectId:projectIdNumber});
+            const atividade = await atividadeService.Create({titulo:title,descricao:description,projectId:Number.parseInt(projectIdNumber)});
             return response.json(atividade);
 
 

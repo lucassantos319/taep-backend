@@ -2,7 +2,7 @@ import { getCustomRepository} from 'typeorm';
 import { ProjetoAtividadesRepository } from '../repositories/ProjetoAtividadeRepository';
 
 interface IProjectActivities{
-    projectId:number,
+    projectId:string,
     activitiesId:number
 }
 

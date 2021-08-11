@@ -25,7 +25,6 @@ class UserController{
 
 
         } catch ( err ){
-            console.log(err);
             return response.status(400).json({
                 message: err.message,
             });
@@ -54,7 +53,6 @@ class UserController{
 
     async GetInfoUserById(request: Request, response: Response){
         
-        console.log("entrei");
         const {id} = request.params;
         const userService = new UserService();
         
