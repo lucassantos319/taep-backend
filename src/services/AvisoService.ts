@@ -31,7 +31,7 @@ class AvisoService{
         }
     }
 
-    async GetAllAvisosByProjectId(projectId){
+    async GetAllAvisosByProjectId(projectId:number){
         
         const projectAvisoService = new ProjectAvisoService();
         const allAvisoRelation = await projectAvisoService.GetAllAvisosByProjectId(projectId);

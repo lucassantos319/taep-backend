@@ -73,9 +73,9 @@ class ProjectService{
         const projects = await getCustomRepository(ProjetoRepository)
         .createQueryBuilder("projects")
         .select('projects.id')
-        .addSelect('projects.title')
-        .addSelect('projects.description')
-        .addSelect('projects.objective')
+        .addSelect('projects.titulo')
+        .addSelect('projects.descricao')
+        .addSelect('projects.objetivo')
         .addSelect('projects.userCreatorId')
         .addSelect('projects.userCreatorEmail')
         .getMany();
@@ -96,7 +96,7 @@ class ProjectService{
         }
     }
 
-    async GetInfoProjectsById(projectId){
+    async GetInfoProjectsById(projectId:number){
         
         const project = await getCustomRepository(ProjetoRepository)
         .createQueryBuilder("projects")
@@ -106,11 +106,11 @@ class ProjectService{
         return project;
     }
 
-    async GetAllProjectsByUserId(userId){
+    async GetAllProjectsByUserId(userId:number){
        
         const userProjectsService = new UserProjectsService();
         const allProjectsIds = await userProjectsService.GetAllProjectsByUserId(userId);
-        
+        console.log('entre');
         var projectsId = [];
 
         for ( var i = 0 ; i < allProjectsIds.length ; i++ )
@@ -122,12 +122,13 @@ class ProjectService{
         .andWhere("projects.id IN (:id)",{id:projectsId})
         .getMany();
 
+        console.log(projects)
         
         return projects;
     
     }
 
-    async GetAllActivitiesByProjectId(projectId){
+    async GetAllActivitiesByProjectId(projectId:number){
         
         const projetoAtividadeService = new ProjetoAtividadeService();
         const allActivitiesIds = await projetoAtividadeService.GetAllActivitiesByProjectId(projectId);

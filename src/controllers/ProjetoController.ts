@@ -4,6 +4,9 @@ import { ProjectService } from '../services/ProjetoService';
 import { TagsService } from "../services/TagsService";
 import { UserService } from '../services/UserService';
 import {AtividadeService} from '../services/AtividadeService';
+import {MongoService} from '../services/MongoService';
+import { User } from "../entities/User";
+import { projectRoutes } from "../routes/ProjectRoutes";
 
 class ProjetoController{
     
@@ -13,6 +16,7 @@ class ProjetoController{
         const projectService = new ProjectService();
         try {
             const projeto = await projectService.Create({title,description,objective,userId});
+            console.log(projeto);
             return response.json(projeto);
 
 
@@ -65,6 +69,7 @@ class ProjetoController{
 
     async GetProjectsByUserId(request: Request, response: Response){
 
+        console.log('entrei')
         try {
             
             const projectService = new ProjectService();
@@ -149,25 +154,43 @@ class ProjetoController{
         
     }
 
-    async CreateAtividade(request: Request, response: Response){
+    async CriarAtividade(request: Request, response: Response){
 
-        try {
-            
+        try{
+            const mongoService = new MongoService();
             const atividadeService = new AtividadeService();
+
             const {projectId} = request.params;
-            const {title,description} = request.body;
+            const {userIdCreator,dataForm} = request.body;
+
+            // atividade Id tem que ser colocada 
             const projectIdNumber = Number.parseInt(projectId);
-            
-            const atividade = await atividadeService.Create({titulo:title,descricao:description,projectId:projectIdNumber});
-            return response.json(atividade);
-
-
-        } catch (error) {
-            return response.status(400).json(error.message)
-        }
-        
+            const atividade = await atividadeService.Create({projectId: projectIdNumber});
+     
+            const mongoAtividade = await mongoService.AddAtividade(atividade.id,userIdCreator,projectIdNumber,dataForm);
+            return response.status(200).json(mongoAtividade);
+           
+        }catch(error){
+            return (response.status(400).json(error.message))
+        }   
     }
 
+    async GetAtividadeByProjectId(request: Request, response: Response){
+        
+        try{
+            const mongoService = new MongoService();
+            const {projectId} = request.params;
+
+            // atividade Id tem que ser colocada 
+            const projectIdNumber = Number.parseInt(projectId);
+            const mongoAtividade = await mongoService.GetAtividadeByProjectId(projectIdNumber);
+            
+            return response.status(200).json(mongoAtividade);
+            
+        } catch(error){
+            return (response.status(400).json(error.message))
+        }   
+    }
 }
 
 export { ProjetoController } ;

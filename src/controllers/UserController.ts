@@ -11,7 +11,7 @@ class UserController{
         const userService = new UserService();
        
         try {
-
+         
             const user = await userService.Create({first_name, last_name,email, password, user_type,nickname}); 
             return response.status(200).json({
                 login:true,
@@ -25,6 +25,7 @@ class UserController{
 
 
         } catch ( err ){
+            console.log(err);
             return response.status(400).json({
                 message: err.message,
             });
@@ -53,11 +54,12 @@ class UserController{
 
     async GetInfoUserById(request: Request, response: Response){
         
+        console.log("entrei");
         const {id} = request.params;
         const userService = new UserService();
         
         try{          
-            const user = await userService.GetInfoUserById(id);
+            const user = await userService.GetInfoUserById(Number.parseInt(id));
             return response.status(200).json(user);
         }
         catch ( err ){
