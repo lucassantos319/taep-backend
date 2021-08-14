@@ -1,0 +1,13 @@
+{
+    "type":"mysql",
+    "host":"173.254.95.203",
+    "port":3306,
+    "username":"atollase_user_lucas",
+    "password":"taep@2020",
+    "database":"atollase_db_lucas",  
+    "migrations":["./src/database/migrations/**.ts"],
+    "entities":["./src/entities/**.ts"],
+    "cli":{
+        "migrationsDir":"./src/database/migrations"
+    }
+}
