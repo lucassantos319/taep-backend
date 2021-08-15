@@ -100,6 +100,24 @@ class UserController{
 
     }
 
+    async UpdateEmail(request:Request,response:Response){
+       
+        try {
+            
+            const {email} = request.body;
+            const {userId} = request.params;
+            const userService = new UserService();
+            const userUpdate = await userService.UpdateEmailUser({email:email,id:userId});
+           
+            return response.status(200).json(userUpdate);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message
+            })
+        }
+
+    }
 
 }
 

@@ -10,7 +10,9 @@ userRoutes.post("/alunos/createUser",userController.Create);
 userRoutes.get("/users",userController.GetInfoUsers);
 userRoutes.get("/users/:id",userController.GetInfoUserById);
 
+
 userRoutes.post("/login",userController.LogIn);
+userRoutes.post("/editEmail/:userId",userController.UpdateEmail);
 
 
 export {userRoutes};
