@@ -142,10 +142,10 @@ class ProjetoController{
             const userProjectService = new UserProjectsService();
             const userService = new UserService();
 
-            var {userId,userRequestId} = request.body;
+            var {userEmail,userRequestId} = request.body;
             var {projectId} = request.params;
 
-            var userLink = await userService.GetInfoUserById(Number.parseInt(userId));
+            var userLink = await userService.GetInfoUserByEmail(userEmail);
             var project = await projectService.GetInfoProjectById(Number.parseInt(projectId))
             if ( project.userCreator.id == userRequestId && project.userCreator.user_type == 1){
 

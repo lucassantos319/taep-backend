@@ -47,6 +47,7 @@ class UserService{
         .select('users.id')
         .addSelect('users.first_name')
         .addSelect('users.last_name')
+        .addSelect('users.email')
         .addSelect('users.user_type')
         .getMany();
 
@@ -65,6 +66,21 @@ class UserService{
         .addSelect('users.email')
         .addSelect('users.user_type')
         .andWhere("users.id = :id", { id: id })
+        .getOne();
+        
+        return user;
+    }
+
+    async GetInfoUserByEmail(emailUser:string){
+       
+        const user = await getCustomRepository(UserRepository)
+        .createQueryBuilder("users")
+        .select('users.id')
+        .addSelect('users.first_name')
+        .addSelect('users.last_name')
+        .addSelect('users.email')
+        .addSelect('users.user_type')
+        .andWhere("users.email = :email", { email: emailUser })
         .getOne();
         
         return user;

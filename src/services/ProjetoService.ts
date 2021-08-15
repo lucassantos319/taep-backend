@@ -156,6 +156,11 @@ class ProjectService{
 
         const users = await getCustomRepository(UserRepository)
         .createQueryBuilder('users')
+        .select('users.id')
+        .addSelect('users.first_name')
+        .addSelect('users.last_name')
+        .addSelect('users.email')
+        .addSelect('users.user_type')
         .andWhere("users.id IN (:id)",{id:usersId})
         .getMany();
 
