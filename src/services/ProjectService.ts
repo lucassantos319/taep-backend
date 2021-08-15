@@ -42,10 +42,10 @@ class ProjectService{
             if ( user != null ){
     
                 const project = projectRepository.create({
-                   title:title,description:description,objective,userCreator:user,
+                   titulo:title,descricao:description,objetivo:objective,userCreator:user,
                    status: Status.Inicio
                 });
-                
+
                 const projectSave = await projectRepository.save(project);
                 const userProject = new UserProjectsService();
                 const existRelation = await userProject.GetRelationUserById(user.id,projectSave.id);
