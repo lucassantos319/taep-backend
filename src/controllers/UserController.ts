@@ -119,6 +119,25 @@ class UserController{
 
     }
 
+    async UpdatePassword(request:Request,response:Response){
+       
+        try {
+            
+            const {password} = request.body;
+            const {userId} = request.params;
+            const userService = new UserService();
+            const userUpdate = await userService.UpdatePasswordUser({password:password,id:userId});
+           
+            return response.status(200).json(userUpdate);
+
+        } catch (error) {
+            return response.status(400).json({
+                message: error.message
+            })
+        }
+
+    }
+
 }
 
 export { UserController }; 

@@ -97,6 +97,17 @@ class UserService{
         return user;
     }
 
+    async UpdatePassword({password,id}){
+        const user = await getCustomRepository(UserRepository)
+        .createQueryBuilder()
+        .update("users")
+        .set({ password: md5(password) })
+        .where("id = :id", { id: id })
+        .execute();
+
+        return user;
+    }
+
     async LogIn(userLogin:IUserLogin){
         
         const user = await getCustomRepository(UserRepository)
