@@ -88,12 +88,6 @@ class ProjectService{
         
         const projects = await getCustomRepository(ProjetoRepository)
         .createQueryBuilder("projects")
-        .select('projects.id')
-        .addSelect('projects.titulo')
-        .addSelect('projects.descricao')
-        .addSelect('projects.objetivo')
-        .addSelect('projects.userCreatorId')
-        .addSelect('projects.userCreatorEmail')
         .andWhere("projects.id = :id",{id:projectId})
         .getOne();
         
