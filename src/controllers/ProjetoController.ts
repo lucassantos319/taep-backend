@@ -86,7 +86,6 @@ class ProjetoController{
 
     async GetProjectsByUserId(request: Request, response: Response){
 
-        console.log('entrei')
         try {
             
             const projectService = new ProjectService();

@@ -77,7 +77,7 @@ class ProjectService{
         .addSelect('projects.titulo')
         .addSelect('projects.descricao')
         .addSelect('projects.objetivo')
-     
+        .leftJoinAndSelect('projects.userCreator','user')
         .getMany();
         
         return projects;
