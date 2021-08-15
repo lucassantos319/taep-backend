@@ -145,6 +145,8 @@ class ProjetoController{
             var {userEmail,userRequestId} = request.body;
             var {projectId} = request.params;
 
+            console.log(request.body)
+            
             var userLink = await userService.GetInfoUserByEmail(userEmail);
             var project = await projectService.GetInfoProjectById(Number.parseInt(projectId))
             
