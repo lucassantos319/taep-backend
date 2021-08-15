@@ -9,7 +9,7 @@ projectRoutes.get("/project/:userId",projetoController.GetProjectsByUserId);
 projectRoutes.get("/project/:userId/:projectId/GetAllNotices",projetoController.GetAllAvisos)
 projectRoutes.get('/project/:userId/:projectId/GetAllActivities',projetoController.GetAllActivities)
 projectRoutes.get("/project/:projectId/atividades",projetoController.GetAtividadeByProjectId);
-projectRoutes.get("project/:projectId/usuarios",projetoController.GetAllUserByProjectId)
+projectRoutes.get("/project/:projectId/usuarios",projetoController.GetAllUserByProjectId)
 
 projectRoutes.post("/project/createProjects",projetoController.Create)
 projectRoutes.post("/project/:userId/:projectId/CreateNotice",projetoController.CreateNotice)
