@@ -6,6 +6,7 @@ import { AvisoService } from './AvisoService';
 import { UserProjetosRepository } from '../repositories/UserProjetoRepository';
 import { ProjetoAtividadeService } from './ProjetoAtividadeService';
 import { AtividadesRepository } from '../repositories/AtividadesRepository';
+import { UserRepository } from '../repositories/UserRepository';
 
 
 enum Status{
@@ -83,6 +84,22 @@ class ProjectService{
         return projects;
     }
 
+    async GetInfoProjectById(projectId:number){
+        
+        const projects = await getCustomRepository(ProjetoRepository)
+        .createQueryBuilder("projects")
+        .select('projects.id')
+        .addSelect('projects.titulo')
+        .addSelect('projects.descricao')
+        .addSelect('projects.objetivo')
+        .addSelect('projects.userCreatorId')
+        .addSelect('projects.userCreatorEmail')
+        .andWhere("projects.id = :id",{id:projectId})
+        .getOne();
+        
+        return projects;
+    }
+
     async CreateNotice({title, description, projectId}){
         try{
 
@@ -126,6 +143,23 @@ class ProjectService{
         
         return projects;
     
+    }
+
+    async GetAllUserByProjectId (projectId: number){
+        
+        const userProjetoService = new UserProjectsService();
+        const allUsersId = await userProjetoService.GetAllUsersByProjectId(projectId);
+
+        var usersId = [];
+        for ( var i = 0 ; i < allUsersId.length ; i++)
+            usersId.push(allUsersId[i].usersId);
+
+        const users = await getCustomRepository(UserRepository)
+        .createQueryBuilder('users')
+        .andWhere("users.id IN (:id)",{id:usersId})
+        .getMany();
+
+        return users
     }
 
     async GetAllActivitiesByProjectId(projectId:number){

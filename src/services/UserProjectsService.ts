@@ -49,6 +49,16 @@ class UserProjectsService{
         return projects;
     } 
 
+    async GetAllUsersByProjectId(projectId:number){
+        
+        const users = await getCustomRepository(UserProjetosRepository)
+        .createQueryBuilder('users_projetos_projects')
+        .andWhere("users_projetos_projects.projectsId = :id", {id:projectId})
+        .getMany();
+
+        return users;
+    }
+
 }
 
 export { UserProjectsService}

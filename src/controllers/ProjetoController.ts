@@ -7,6 +7,7 @@ import {AtividadeService} from '../services/AtividadeService';
 import {MongoService} from '../services/MongoService';
 import { User } from "../entities/User";
 import { projectRoutes } from "../routes/ProjectRoutes";
+import { UserProjectsService } from "../services/UserProjectsService";
 
 class ProjetoController{
     
@@ -67,6 +68,22 @@ class ProjetoController{
         }
     }
 
+    async GetAllUserByProjectId(request:Request, response: Response){
+        try{
+
+            const projectService = new ProjectService();
+            const {projectId} = request.params;
+            const users = await projectService.GetAllUserByProjectId(Number.parseInt(projectId))    
+       
+            return response.status(200).json(users);
+        }
+        catch(error){
+            return response.status(400).json({
+                message:error.message
+            });
+        }
+    }
+
     async GetProjectsByUserId(request: Request, response: Response){
 
         console.log('entrei')
@@ -75,7 +92,7 @@ class ProjetoController{
             const projectService = new ProjectService();
             const { userId } = request.params;
             const projects = await projectService.GetAllProjectsByUserId(Number.parseInt(userId));
-            response.json(projects);
+            return response.json(projects);
 
         } 
         catch (error) {
@@ -114,6 +131,34 @@ class ProjetoController{
             return response.status(400).json({
                 message: err.message,
             });
+        }
+    }
+
+    async LinkUserProject ( request: Request, response:Response){
+        
+        try{
+
+            const projectService = new ProjectService();
+            const userProjectService = new UserProjectsService();
+            const userService = new UserService();
+
+            var {userId,userRequestId} = request.body;
+            var {projectId} = request.params;
+
+            var userLink = await userService.GetInfoUserById(Number.parseInt(userId));
+            var project = await projectService.GetInfoProjectById(Number.parseInt(projectId))
+            if ( project.userCreator.id == userRequestId && project.userCreator.user_type == 1){
+
+                const link = userProjectService.Create({usersEmail:userLink.email,usersId:userLink.id,projectsId:Number.parseInt(projectId)});
+                return response.status(200).json(link)
+            }            
+            
+
+
+        }catch(err){
+            return response.status(400).json({
+                message:err.message
+            })
         }
     }
 
