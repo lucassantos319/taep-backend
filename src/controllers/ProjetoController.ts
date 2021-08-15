@@ -163,6 +163,7 @@ class ProjetoController{
             const {projectId} = request.params;
             const {title,description,userIdCreator,dataForm} = request.body;
 
+            console.log(title,description)
             // atividade Id tem que ser colocada 
             const projectIdNumber = Number.parseInt(projectId);
             const atividade = await atividadeService.Create({titulo:title,descricao:description,projectId: projectIdNumber});
