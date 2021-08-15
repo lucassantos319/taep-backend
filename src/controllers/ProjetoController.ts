@@ -147,11 +147,13 @@ class ProjetoController{
 
             var userLink = await userService.GetInfoUserByEmail(userEmail);
             var project = await projectService.GetInfoProjectById(Number.parseInt(projectId))
-            if ( project.userCreator.id == userRequestId && project.userCreator.user_type == 1){
+            
+            console.log(project);
+            // if ( project.userCreator.id == userRequestId && project.userCreator.user_type == 1){
 
-                const link = userProjectService.Create({usersEmail:userLink.email,usersId:userLink.id,projectsId:Number.parseInt(projectId)});
-                return response.status(200).json(link)
-            }            
+            //     const link = userProjectService.Create({usersEmail:userLink.email,usersId:userLink.id,projectsId:Number.parseInt(projectId)});
+            //     return response.status(200).json(link)
+            // }            
             
 
 
