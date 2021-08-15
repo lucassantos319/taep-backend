@@ -97,7 +97,7 @@ class UserService{
         return user;
     }
 
-    async UpdatePassword({password,id}){
+    async UpdatePasswordUser({password,id}){
         const user = await getCustomRepository(UserRepository)
         .createQueryBuilder()
         .update("users")
