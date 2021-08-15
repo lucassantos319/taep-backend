@@ -3,13 +3,14 @@ import { AtividadesRepository } from '../repositories/AtividadesRepository'
 import { ProjetoAtividadeService } from './ProjetoAtividadeService';
 
 interface IAtividades{
-   
+    titulo:string,
+    descricao:string
     projectId:number,
 }
 
 class AtividadeService{
 
-    async Create({projectId}:IAtividades){
+    async Create({titulo,descricao,projectId}:IAtividades){
 
         try {
             
@@ -17,6 +18,7 @@ class AtividadeService{
             const projectAtividadeService = new ProjetoAtividadeService();
             
             const atividade = await atividadeRepository.create({
+                titulo:titulo,descricao:descricao
             });
 
             const atividadeSave = await atividadeRepository.save(atividade);

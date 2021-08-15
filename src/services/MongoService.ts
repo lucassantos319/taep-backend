@@ -2,14 +2,14 @@ import {MongoClient} from 'mongodb'
 
 class MongoService {
 
-    async AddAtividade(atividadeId,userIdCreator,projetoId,data){
+    async AddAtividade(title,description,atividadeId,userIdCreator,projetoId,data){
         
         const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         client.connect(err => {
             const collection = client.db("taep").collection("atividades_taep");
             // perform actions on the collection object
-            collection.insertOne({atividadeId,userIdCreator,projetoId,data})
+            collection.insertOne({title,description,atividadeId,userIdCreator,projetoId,data})
         });
         client.close();
         return true;

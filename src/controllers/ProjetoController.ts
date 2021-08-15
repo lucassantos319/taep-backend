@@ -161,13 +161,13 @@ class ProjetoController{
             const atividadeService = new AtividadeService();
 
             const {projectId} = request.params;
-            const {userIdCreator,dataForm} = request.body;
+            const {title,description,userIdCreator,dataForm} = request.body;
 
             // atividade Id tem que ser colocada 
             const projectIdNumber = Number.parseInt(projectId);
-            const atividade = await atividadeService.Create({projectId: projectIdNumber});
+            const atividade = await atividadeService.Create({titulo:title,descricao:description,projectId: projectIdNumber});
      
-            const mongoAtividade = await mongoService.AddAtividade(atividade.id,userIdCreator,projectIdNumber,dataForm);
+            const mongoAtividade = await mongoService.AddAtividade(title,description,atividade.id,userIdCreator,projectIdNumber,dataForm);
             return response.status(200).json(mongoAtividade);
            
         }catch(error){
