@@ -73,10 +73,6 @@ class ProjectService{
         
         const projects = await getCustomRepository(ProjetoRepository)
         .createQueryBuilder("projects")
-        .select('projects.id')
-        .addSelect('projects.titulo')
-        .addSelect('projects.descricao')
-        .addSelect('projects.objetivo')
         .leftJoinAndSelect('projects.userCreator','user')
         .getMany();
         

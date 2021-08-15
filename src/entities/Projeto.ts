@@ -12,6 +12,7 @@ import {User} from './User';
 import {Tags} from './Tags';
 import {Aviso} from './Aviso';
 import {Atividades} from './Atividades';
+import { Disciplinas } from './Disciplinas';
 
 enum Status{
     
@@ -32,6 +33,18 @@ class Projeto{
     titulo: string;
     
     @Column()
+    turma: string;
+
+    @Column()
+    disciplina: string;
+
+    @Column()
+    materiaApoio:string;
+
+    @Column()
+    tecnologias:string;
+
+    @Column()
     descricao:string;
 
     @Column()
@@ -44,6 +57,10 @@ class Projeto{
     @ManyToMany(type => Tags )
     @JoinTable() 
     tags: Tags;
+
+    @ManyToMany(type => Disciplinas )
+    @JoinTable() 
+    disciplinasRelacionadas: Disciplinas;
 
     @ManyToMany(type => Aviso )
     @JoinTable() 
