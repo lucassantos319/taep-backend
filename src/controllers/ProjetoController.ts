@@ -126,8 +126,8 @@ class ProjetoController{
         const projectService = new ProjectService();
         const userService = new UserService();
         try { 
-            const {userId,projectId} = request.params; 
-            const {title, description} = request.body;
+            const {projectId} = request.params; 
+            const {title, description,userId} = request.body;
             const user = await userService.GetInfoUserById(Number.parseInt(userId));
             const project = await projectService.GetInfoProjectsById(Number.parseInt(projectId));
 
@@ -189,7 +189,7 @@ class ProjetoController{
         try{
 
             const avisoService = new AvisoService();
-            const {userId,projectId} = request.params;
+            const {projectId} = request.params;
             const allProjectAvisos = await avisoService.GetAllAvisosByProjectId(Number.parseInt(projectId));
 
             return response.json(allProjectAvisos);
