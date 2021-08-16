@@ -78,11 +78,13 @@ class ProjectService{
                 const disciplinaService = new DisciplinaService();
 
                 tags.forEach( async (item) => {
-                    const tags = await tagsService.Create(item["disciplina"],projectSave.id)
+                    console.log(item)
+                    // const tags = await tagsService.Create(item["disciplina"],projectSave.id)
                 });
 
                 disciplinas_relacionais.forEach( async (item) => {
-                    const disciplinas = await disciplinaService.Create(item["competencia"],projectSave.id)
+                    console.log(item)
+                    // const disciplinas = await disciplinaService.Create(item["competencia"],projectSave.id)
                 });
 
 
