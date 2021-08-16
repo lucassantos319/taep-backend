@@ -26,6 +26,9 @@ class ProjectsTagsService{
         .where('projectsId = :id',{id:projectId})
         .getMany();
 
+        if ( (await tags).length == 0)
+            return null;
+
         return tags
     }
 }

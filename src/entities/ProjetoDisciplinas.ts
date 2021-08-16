@@ -1,7 +1,7 @@
 import {Entity,PrimaryColumn} from 'typeorm';
 
 @Entity('projects_disciplina_disciplinas')
-class ProjetoTags{
+class ProjetoDisciplinas{
 
     @PrimaryColumn()
     disciplinasId:number;
@@ -11,4 +11,4 @@ class ProjetoTags{
 
 }
 
-export { ProjetoTags }
+export { ProjetoDisciplinas }

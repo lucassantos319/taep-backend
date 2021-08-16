@@ -7,6 +7,9 @@ import { UserProjetosRepository } from '../repositories/UserProjetoRepository';
 import { ProjetoAtividadeService } from './ProjetoAtividadeService';
 import { AtividadesRepository } from '../repositories/AtividadesRepository';
 import { UserRepository } from '../repositories/UserRepository';
+import { ProjectsTagsService } from './ProjetoTagsService';
+import { TagsService } from './TagsService';
+import { DisciplinaService } from './DIsciplinaService';
 
 
 enum Status{
@@ -19,15 +22,21 @@ enum Status{
 }
 
 interface IProject{
-    title: string,
+    title:string,
+    turma:string,
+    disciplina:string,
+    tecnologias:string,
+    material_apoio:string,
+    disciplinas_relacionais:[],
+    tags:[],
     description:string,
     objective:string,
-    userId: number
+    userId:number
 }
 
 class ProjectService{
     
-    async Create({title,description,objective,userId}:IProject){
+    async Create({title,turma,disciplina,tecnologias,material_apoio,disciplinas_relacionais,tags,description,objective,userId}:IProject){
        
         try {
             
@@ -43,11 +52,19 @@ class ProjectService{
             if ( user != null ){
     
                 const project = projectRepository.create({
-                   titulo:title,descricao:description,objetivo:objective,userCreator:user,
+                   titulo:title,
+                   turma:turma,
+                   disciplina:disciplina,
+                   tecnologias:tecnologias,
+                   materiaApoio:material_apoio,
+                   descricao:description,
+                   objetivo:objective,
+                   userCreator:user,
                    status: Status.Inicio
                 });
                 
                 const projectSave = await projectRepository.save(project);
+               
                 const userProject = new UserProjectsService();
                 const existRelation = await userProject.GetRelationUserById(user.id,projectSave.id);
                
@@ -56,6 +73,19 @@ class ProjectService{
                 }
                 
                 await userProject.Create({usersId:user.id,usersEmail:user.email,projectsId:projectSave.id});
+                
+                const tagsService = new TagsService();
+                const disciplinaService = new DisciplinaService();
+
+                tags.forEach( async (item) => {
+                    const tags = await tagsService.Create(item["disciplina"],projectSave.id)
+                });
+
+                disciplinas_relacionais.forEach( async (item) => {
+                    const disciplinas = await disciplinaService.Create(item["competencia"],projectSave.id)
+                });
+
+
                 return project;
             
             }
