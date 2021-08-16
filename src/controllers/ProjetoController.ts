@@ -30,6 +30,25 @@ class ProjetoController{
 
     }
 
+    async GetProjectsById(request:Request, response:Response){
+        
+        const projectService = new ProjectService();
+        try {
+
+            const {projectId} = request.params; 
+            const projects = await projectService.GetInfoProjectById(Number.parseInt(projectId)); 
+            return response.json(projects);
+
+
+        } catch ( err ){
+
+            return response.status(400).json({
+                message: err.message,
+            });
+
+        }
+    }
+
     async GetAllProjects(request: Request, response: Response){
         
         const projectService = new ProjectService();
