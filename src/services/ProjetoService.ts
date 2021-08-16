@@ -139,6 +139,7 @@ class ProjectService{
         
         const project = await getCustomRepository(ProjetoRepository)
         .createQueryBuilder("projects")
+        .leftJoinAndSelect('projects.userCreator','user')
         .andWhere("projects.id = :id",{id:projectId})
         .getOne();
 
