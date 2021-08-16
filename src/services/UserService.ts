@@ -97,15 +97,26 @@ class UserService{
         return user;
     }
 
-    async UpdatePasswordUser({password,id}){
+    async UpdatePasswordUser({password,password_old,id}){
+       
         const user = await getCustomRepository(UserRepository)
+        .createQueryBuilder("users")
+        .where("id = :id",{id:id})
+        .getOne();
+
+        if ( user.password != password_old){
+            Error("Senha errada");
+        }
+        
+        const userNewPassword = await getCustomRepository(UserRepository)
         .createQueryBuilder()
         .update("users")
         .set({ password: md5(password) })
         .where("id = :id", { id: id })
         .execute();
 
-        return user;
+        return userNewPassword;
+       
     }
 
     async LogIn(userLogin:IUserLogin){

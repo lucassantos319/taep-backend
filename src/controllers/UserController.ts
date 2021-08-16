@@ -123,10 +123,10 @@ class UserController{
        
         try {
             
-            const {password} = request.body;
+            const {password,password_old} = request.body;
             const {userId} = request.params;
             const userService = new UserService();
-            const userUpdate = await userService.UpdatePasswordUser({password:password,id:userId});
+            const userUpdate = await userService.UpdatePasswordUser({password:password,password_old: password_old,id:userId});
            
             return response.status(200).json(userUpdate);
 
