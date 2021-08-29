@@ -90,7 +90,7 @@ class UserController{
                     email:userLogin.email
                 });
       
-            return response.status(400).json({message:"login failure"});
+            return response.status(400).json({message:"usuario não existe"});
 
         } catch (error) {
             return response.status(400).json({

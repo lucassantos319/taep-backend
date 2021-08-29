@@ -130,7 +130,7 @@ class UserService{
             if ( md5(userLogin.password) == user.password)
                 return user;
             else
-                Error("Password wrong");
+                throw new Error("Password wrong");
 
         return null;
     }

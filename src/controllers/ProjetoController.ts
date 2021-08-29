@@ -5,8 +5,6 @@ import { TagsService } from "../services/TagsService";
 import { UserService } from '../services/UserService';
 import {AtividadeService} from '../services/AtividadeService';
 import {MongoService} from '../services/MongoService';
-import { User } from "../entities/User";
-import { projectRoutes } from "../routes/ProjectRoutes";
 import { UserProjectsService } from "../services/UserProjectsService";
 
 class ProjetoController{
