@@ -90,9 +90,15 @@ class UserController{
                     email:userLogin.email
                 });
       
-            return response.status(400).json({message:"usuario não existe"});
+            return response.status(403).json({message:"usuario não existe"});
 
         } catch (error) {
+
+            var errorMessage = new String(error)
+            
+            if ( errorMessage.includes("Password wrong") )
+                return response.status(402).json({message:"senha errada"});
+
             return response.status(400).json({
                 message: error.message
             })

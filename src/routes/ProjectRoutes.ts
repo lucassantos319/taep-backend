@@ -16,4 +16,5 @@ projectRoutes.post("/project/:projectId/CreateNotice",projetoController.CreateNo
 projectRoutes.post("/project/:userId/:projectId/CreateTags",projetoController.CreateTags)
 projectRoutes.post("/project/:projectId/criarAtividade",projetoController.CriarAtividade)
 projectRoutes.post("/project/:projectId/linkUsuario",projetoController.LinkUserProject)
+
 export { projectRoutes };

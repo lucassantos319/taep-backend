@@ -11,7 +11,6 @@ userRoutes.get("/users/:id",userController.GetInfoUserById);
 
 userRoutes.post("/login",userController.LogIn);
 userRoutes.post("/login/createUser",userController.Create);
-userRoutes.post("/alunos/createUser",userController.Create);
 userRoutes.post("/editEmail/:userId",userController.UpdateEmail);
 userRoutes.post("/editPassword/:userId",userController.UpdatePassword);
 
