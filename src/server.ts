@@ -6,7 +6,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = ['http://localhost:3000','https://reacttest120.herokuapp.com/'];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins
