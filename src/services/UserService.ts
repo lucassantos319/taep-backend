@@ -1,7 +1,7 @@
 import { getCustomRepository, getRepository } from 'typeorm';
 import { UserRepository } from '../repositories/UserRepository';
 import md5 from 'md5';
-
+import nodemailer from 'nodemailer';
 
 interface IUserCreate{
     first_name: string, 
@@ -15,6 +15,12 @@ interface IUserCreate{
 interface IUserLogin{
     email: string,
     password: string
+}
+
+interface IUserEmail{
+    email:string,
+    first_name:string,
+    last_name:string
 }
 
 class UserService{
@@ -135,6 +141,9 @@ class UserService{
         return null;
     }
 
+    SendWelcomeEmail(userEmail:IUserEmail){
+        const node = 
+    }
 }
 
 export { UserService };

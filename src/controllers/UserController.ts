@@ -2,17 +2,21 @@ import { Request, Response} from "express";
 import { UserService } from "../services/UserService";
 import md5 from 'md5';
 import { SimpleConsoleLogger } from "typeorm";
+import { EmailService } from "../services/EmailService";
 
 class UserController{
 
     async Create (request: Request, response: Response){
        
-        const {first_name, last_name,email, password, user_type, nickname} = request.body;
+        const {first_name, last_name,email, password, user_type, nickname,titulo,texto,emails} = request.body;
         const userService = new UserService();
-       
+        const emailService = new EmailService();
+
         try {
          
             const user = await userService.Create({first_name, last_name,email, password, user_type,nickname}); 
+            emailService.SendEmail(emails,texto,titulo);
+            
             return response.status(200).json({
                 login:true,
                 id:user.id,
