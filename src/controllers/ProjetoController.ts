@@ -9,6 +9,7 @@ import { UserProjectsService } from "../services/UserProjectsService";
 
 class ProjetoController{
     
+    
     async Create(request: Request, response: Response){
         
         const {title,turma,disciplina,description,tecnologias,objective,material_apoio,disciplinas_relacionais,tags,userId} = request.body;
@@ -256,6 +257,23 @@ class ProjetoController{
         } catch(error){
             return (response.status(400).json(error.message))
         }   
+    }
+    
+    async DeleteProject(request: Request,response: Response) {
+        
+        const {projectId} = request.params;
+        const idProject = Number.parseInt(projectId);
+
+        try {
+            const projectService = new ProjectService();
+            var deleteProject = await projectService.DeleteProjectById(idProject);
+
+            return response.status(200);
+        }
+        catch(error){
+            console.log(error.message);
+            return (response.status(400).json(error.message));
+        }
     }
 }
 

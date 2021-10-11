@@ -10,6 +10,7 @@ import { UserRepository } from '../repositories/UserRepository';
 import { ProjectsTagsService } from './ProjetoTagsService';
 import { TagsService } from './TagsService';
 import { DisciplinaService } from './DIsciplinaService';
+import { Projeto } from '../entities/Projeto';
 
 
 enum Status{
@@ -211,6 +212,17 @@ class ProjectService{
         return activities;
     }
 
+    async DeleteProjectById(idProject: number) {
+        
+        const projeto = await getCustomRepository(ProjetoRepository)
+        .createQueryBuilder('projects')
+        .delete()
+        .from(Projeto)
+        .where("projects.id = :id", {id: idProject})
+        .execute();
+
+        return projeto;
+    }
 }
 
 export { ProjectService }
