@@ -20,8 +20,9 @@ class EmailService
                     console.log(error);
                 else
                     console.log('congratz');
-            })
+            });
            
+            console.log(emails);
             // Welcome teacher message
             if ( type == 1 )
                 Array(emails).forEach(email=>{
@@ -37,6 +38,7 @@ class EmailService
             // Welcome student message
             if ( type == 2 )
                 Array(emails).forEach(email=>{
+                    console.log(email);
                     transporter.sendMail({
                         from:'"TAEP 4.0" <taep.2021.server@gmail.com>',
                         to: email,

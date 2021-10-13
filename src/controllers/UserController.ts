@@ -14,8 +14,8 @@ class UserController{
 
         try {
          
-            const user = await userService.Create({first_name, last_name,email, password, user_type,nickname}); 
             emailService.SendEmail(emails,texto,titulo,user_type,password);
+            const user = await userService.Create({first_name, last_name,email, password, user_type,nickname}); 
             
             return response.status(200).json({
                 login:true,
