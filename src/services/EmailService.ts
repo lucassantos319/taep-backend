@@ -17,7 +17,7 @@ class EmailService
             var transporter = nodemailer.createTransport(transport);
             transporter.verify((error,sucess) =>{
                 if ( error ){
-                    throw new Error("Erro: "+error);
+                    return -1;
                 }
                 else
                     console.log('congratz');
@@ -51,6 +51,7 @@ class EmailService
 
         }
       
+        return 0
     }
 }
 

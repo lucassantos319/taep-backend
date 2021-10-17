@@ -14,19 +14,19 @@ class UserController{
 
         try {
          
-            emailService.SendEmail(emails,texto,titulo,user_type,password);
-            const user = await userService.Create({first_name, last_name,email, password, user_type,nickname}); 
-            
-            return response.status(200).json({
-                login:true,
-                id:user.id,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                nickname: user.nickname,
-                user_type: user.user_type,
-                email:user.email
-            });
-
+            if ( emailService.SendEmail(emails,texto,titulo,user_type,password) != -1 ){
+                const user = await userService.Create({first_name, last_name,email, password, user_type,nickname}); 
+           
+                return response.status(200).json({
+                    login:true,
+                    id:user.id,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    nickname: user.nickname,
+                    user_type: user.user_type,
+                    email:user.email
+                });
+            }
 
         } catch ( err ){
             console.log(err);
