@@ -8,14 +8,14 @@ class UserController{
 
     async Create (request: Request, response: Response){
        
-        const {first_name, last_name,email, password, user_type, nickname,titulo,texto,emails} = request.body;
+        const {first_name, last_name,email, password, user_type, nickname,titulo,texto,emails,professor} = request.body;
         const userService = new UserService();
         const emailService = new EmailService();
 
         try {
          
             const user = await userService.Create({first_name, last_name,email, password, user_type,nickname}); 
-            emailService.SendEmail(emails,texto,titulo,user_type,password);
+            emailService.SendEmail(emails,texto,titulo,user_type,password,professor);
             
             return response.status(200).json({
                 login:true,
