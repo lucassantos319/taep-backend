@@ -16,13 +16,13 @@ class EmailService
     
             var transporter = nodemailer.createTransport(transport);
             transporter.verify((error,sucess) =>{
-                if ( error )
-                    console.log(error);
+                if ( error ){
+                    throw new Error("Erro: "+error);
+                }
                 else
                     console.log('congratz');
             });
            
-            console.log(emails);
             // Welcome teacher message
             if ( type == 1 )
                 Array(emails).forEach(email=>{
@@ -31,6 +31,7 @@ class EmailService
                         to: email,
                         subject:{titulo},
                         html: '<div style="background-color: #162A52;padding-top:20px;padding-bottom:40px;font-family:Arial, Helvetica, sans-serif;text-align: center;"><div style=""><h1 style="color: white;">Bem vindo ao TAEP 4.0</h1></div><div style="margin-top:20px;"><p style="color:white">Seja bem vindo a plataforma do taep, estamos  </p></div></div>'
+                   
                     });
                     
                 });
