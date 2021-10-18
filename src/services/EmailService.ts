@@ -26,6 +26,7 @@ class EmailService
             // Welcome teacher message
             if ( type == 1 )
                 Array(emails).forEach(email=>{
+                    console.log(email)
                     transporter.sendMail({
                         from:'"TAEP 4.0" <taep.2021.server@gmail.com>',
                         to: email,

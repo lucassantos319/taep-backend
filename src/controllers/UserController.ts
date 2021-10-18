@@ -9,6 +9,7 @@ class UserController{
     async Create (request: Request, response: Response){
        
         const {first_name, last_name,email, password, user_type, nickname,titulo,texto,emails,professor} = request.body;
+        console.log(request.body);
         const userService = new UserService();
         const emailService = new EmailService();
 
