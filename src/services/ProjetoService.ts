@@ -11,6 +11,8 @@ import { ProjectsTagsService } from './ProjetoTagsService';
 import { TagsService } from './TagsService';
 import { DisciplinaService } from './DIsciplinaService';
 import { Projeto } from '../entities/Projeto';
+import { EscopoService } from './EscopoService';
+import { ProjetoEscopoService } from './ProjetoEscopoService';
 
 
 enum Status{
@@ -22,84 +24,71 @@ enum Status{
 
 }
 
-interface IProject{
-    title:string,
-    turma:string,
-    disciplina:string,
-    tecnologias:string,
-    material_apoio:string,
-    disciplinas_relacionais:[],
-    tags:[],
-    description:string,
-    objective:string,
-    userId:number
-}
-
 class ProjectService{
     
-    async Create({title,turma,disciplina,tecnologias,material_apoio,disciplinas_relacionais,tags,description,objective,userId}:IProject){
-       
-        try {
-            
-            const projectRepository = getCustomRepository(ProjetoRepository);
+    async Create({disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId}){
         
-            if ( userId == null )
-                throw new Error("Id usuario não cadastrado")
-    
+        try{
+
+            const projectRepository = getCustomRepository(ProjetoRepository);
+            if (userId == null)
+                throw new Error("Id usuario não cadastrado");
+        
             const userService = new UserService();
-            const user = await userService.GetInfoUserById(userId)
-           
-            
+            const user = await userService.GetInfoUserById(userId);
             if ( user != null ){
-    
+               
                 const project = projectRepository.create({
-                   titulo:title,
-                   turma:turma,
-                   disciplina:disciplina,
-                   tecnologias:tecnologias,
-                   materiaApoio:material_apoio,
-                   descricao:description,
-                   objetivo:objective,
-                   userCreator:user,
-                   status: Status.Inicio
+                    titulo:title,
+                    objetivo:objective,
+                    turma:turma,
+                    descricao:description,
+                    userCreator:user,
+                    status: Status.Inicio,
                 });
-                
+
                 const projectSave = await projectRepository.save(project);
                
-                const userProject = new UserProjectsService();
-                const existRelation = await userProject.GetRelationUserById(user.id,projectSave.id);
-               
-                if ( existRelation != null ){
-                    throw new Error('Relação já existe');
-                }
-                
-                await userProject.Create({usersId:user.id,usersEmail:user.email,projectsId:projectSave.id});
-                
-                const tagsService = new TagsService();
-                const disciplinaService = new DisciplinaService();
-
-                tags.forEach( async (item:any) => {
-                    console.log(item)
-                    const tags = await tagsService.Create(item.competencia,projectSave.id)
-                });
-
-                disciplinas_relacionais.forEach( async (item:any) => {
-                    console.log(item)
-                    const disciplinas = await disciplinaService.Create(item.disciplina,projectSave.id)
-                });
-
+                this.CreateUserProjectRelation(user,projectSave);
+                this.CreateEscopoProjectRelation({disciplinas,ods,steam,skills},projectSave);
+                this.CreateTecInfoProjectRelation(tecnologias,projectSave);
 
                 return project;
             
             }
 
-            throw new Error("Usuario nao existe");
-
-        } catch(error){
-
+        }
+        catch (error){
             throw new Error(error);
         }
 
+    }
+
+    async CreateEscopoProjectRelation({disciplinas,ods,steam,skills},project){
+
+        const escopoService = new EscopoService();
+        const escopoProjectService = new ProjetoEscopoService();
+        const escopo = await escopoService.Create(disciplinas,ods,steam,skills)
+
+        await escopoProjectService.Create(escopo.id,project.id);
+
+    }
+
+    async CreateTecInfoProjectRelation(tecnologias,project){
+
+    }
+
+    async CreateUserProjectRelation(user,project){
+
+        const userProject = new UserProjectsService();
+        const existRelation = await userProject.GetRelationUserById(user.id,project.id);
+        
+        if ( existRelation != null ){
+            throw new Error('Relação já existe');
+        }
+        
+        await userProject.Create({usersId:user.id,usersEmail:user.email,projectsId:project.id});
+        
     }
 
     async GetInfoProjects(){

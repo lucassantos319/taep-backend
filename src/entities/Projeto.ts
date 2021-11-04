@@ -8,6 +8,7 @@ import {
     JoinTable,
     ManyToOne
 } from 'typeorm';
+
 import {User} from './User';
 import {Tags} from './Tags';
 import {Aviso} from './Aviso';

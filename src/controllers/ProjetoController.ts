@@ -4,7 +4,7 @@ import { ProjectService } from '../services/ProjetoService';
 import { TagsService } from "../services/TagsService";
 import { UserService } from '../services/UserService';
 import {AtividadeService} from '../services/AtividadeService';
-import {MongoService} from '../services/MongoService';
+import { MongoService } from '../services/MongoService';
 import { UserProjectsService } from "../services/UserProjectsService";
 
 class ProjetoController{
@@ -12,10 +12,12 @@ class ProjetoController{
     
     async Create(request: Request, response: Response){
         
-        const {title,turma,disciplina,description,tecnologias,objective,material_apoio,disciplinas_relacionais,tags,userId} = request.body;
+        const {disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId} = request.body;
+        
         const projectService = new ProjectService();
         try {
-            const projeto = await projectService.Create({title,turma,disciplina,tecnologias,material_apoio,disciplinas_relacionais,tags,description,objective,userId});
+        
+            const projeto = await projectService.Create({disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId});
             return response.json(projeto);
 
 
