@@ -39,7 +39,14 @@ class ProjetoController{
 
             const {projectId} = request.params; 
             const projects = await projectService.GetInfoProjectById(Number.parseInt(projectId)); 
-            return response.json(projects);
+            const escopoInfo = await projectService.GetInfoEscopoByProjectId(Number.parseInt(projectId));
+            
+            const obj = {
+                "projects":projects,
+                "escopo":escopoInfo
+            }
+            
+            return response.json(obj);
 
 
         } catch ( err ){

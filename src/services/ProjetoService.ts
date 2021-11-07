@@ -14,6 +14,11 @@ import { Projeto } from '../entities/Projeto';
 import { EscopoService } from './EscopoService';
 import { ProjetoEscopoService } from './ProjetoEscopoService';
 import { ProjetoTecnologiaService } from './ProjetoTecnologiaService';
+import { ProjetoEscopoRepository } from '../repositories/ProjetoEscopoRepository';
+import { EscopoRepository } from '../repositories/EscopoRepository';
+import { EscopoODSRepository } from '../repositories/EscopoODSRepository';
+import { EscopoSteamRepository } from '../repositories/EscopoSteamRepository';
+import { EscopoSkillsRepository } from '../repositories/EscopoSkillsRepository';
 
 
 enum Status{
@@ -139,6 +144,43 @@ class ProjectService{
         .getOne();
 
         return project;
+    }
+
+    async GetInfoEscopoByProjectId(projectId: number){
+        
+        const projetoEscopo = await getCustomRepository(ProjetoEscopoRepository)
+        .createQueryBuilder("projeto_escopo")
+        .andWhere("projeto_escopo.id = :id",{id:projectId})
+        .getOne();
+
+        const escopo = await getCustomRepository(EscopoRepository)
+        .createQueryBuilder("escopo")
+        .andWhere("escopo.id = :id",{id:projetoEscopo.escopoId})
+        .getOne();
+
+        const escopoODS = await getCustomRepository(EscopoODSRepository)
+        .createQueryBuilder("escopo_ods")
+        .andWhere("escopo_ods.EscopoId = :id",{id:projetoEscopo.escopoId})
+        .getMany();
+
+        const escopoSteam = await getCustomRepository(EscopoSteamRepository)
+        .createQueryBuilder("Escopo_Steam")
+        .andWhere("Escopo_Steam.escopoId = :id",{id:projetoEscopo.escopoId})
+        .getMany();
+
+        const escopoSkill = await getCustomRepository(EscopoSkillsRepository)
+        .createQueryBuilder("escopo_Skills")
+        .andWhere("escopo_Skills.escopoId = :id",{id:projetoEscopo.escopoId})
+        .getMany();
+
+
+        return {
+            "escopo":escopo,
+            "escopoOds":escopoODS,
+            "escopoSteam":escopoSteam,
+            "escopoSkill":escopoSkill
+        }
+
     }
 
     async GetAllProjectsByUserId(userId:number){
