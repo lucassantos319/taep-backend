@@ -19,6 +19,8 @@ import { EscopoRepository } from '../repositories/EscopoRepository';
 import { EscopoODSRepository } from '../repositories/EscopoODSRepository';
 import { EscopoSteamRepository } from '../repositories/EscopoSteamRepository';
 import { EscopoSkillsRepository } from '../repositories/EscopoSkillsRepository';
+import { SteamRepository } from '../repositories/SteamRepository';
+import { SkillsRepository } from '../repositories/SkillsRepository';
 
 
 enum Status{
@@ -150,7 +152,7 @@ class ProjectService{
         
         const projetoEscopo = await getCustomRepository(ProjetoEscopoRepository)
         .createQueryBuilder("projeto_escopo")
-        .andWhere("projeto_escopo.id = :id",{id:projectId})
+        .andWhere("projeto_escopo.projectsId = :id",{id:projectId})
         .getOne();
 
         const escopo = await getCustomRepository(EscopoRepository)
@@ -168,17 +170,34 @@ class ProjectService{
         .andWhere("Escopo_Steam.escopoId = :id",{id:projetoEscopo.escopoId})
         .getMany();
 
+        var steamArray = []
+        for ( var i = 0 ; i < escopoSteam.length; i++ )
+            steamArray.push(escopoSteam[i].SteamId);
+
+        const steam = await getCustomRepository(SteamRepository)
+        .createQueryBuilder("Steam")
+        .andWhere("Steam.id IN (:id)",{id:steamArray})
+        .getMany();
+
         const escopoSkill = await getCustomRepository(EscopoSkillsRepository)
         .createQueryBuilder("escopo_Skills")
         .andWhere("escopo_Skills.escopoId = :id",{id:projetoEscopo.escopoId})
         .getMany();
 
+        var skillArray = []
+        for (var i = 0 ; i < escopoSkill.length ; i++)
+            skillArray.push(escopoSkill[i].SkillsId);
+
+        const skills = await getCustomRepository(SkillsRepository)
+        .createQueryBuilder("skills")
+        .andWhere("skills.id IN (:id)",{id:skillArray})
+        .getMany();
 
         return {
             "escopo":escopo,
             "escopoOds":escopoODS,
-            "escopoSteam":escopoSteam,
-            "escopoSkill":escopoSkill
+            "escopoSteam":steam,
+            "escopoSkill":skills
         }
 
     }

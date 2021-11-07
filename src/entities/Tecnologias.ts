@@ -9,6 +9,9 @@ class Tecnologias{
     @Column()
     tecnologia:string;
 
+    @Column()
+    Links:string;
+
 }
 
 export {Tecnologias}
