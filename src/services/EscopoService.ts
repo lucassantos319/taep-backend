@@ -12,18 +12,28 @@ class EscopoService {
         const escopoSave = await escopoRepository.create({
             disciplina:disciplinas
         });
+
+        const escopoSaveBD = await escopoRepository.save(escopoSave);
         
         const escopoODSService = new EscopoODSService();
-        escopoODSService.Create(ods,escopoSave);
+        escopoODSService.Create(ods,escopoSaveBD);
 
         const escopoSteamService = new EscopoSteamService();
-        escopoSteamService.Create(steam,escopoSave);
+        escopoSteamService.Create(steam,escopoSaveBD);
 
         const escopoSkillsService = new EscopoSkillsService();
-        escopoSkillsService.Create(skills,escopoSave);
+        escopoSkillsService.Create(skills,escopoSaveBD);
 
-        return escopoSave;
+        return escopoSaveBD;
     }
+
+    async Save(escopoSave){
+
+        const repository = getCustomRepository(EscopoRepository);
+        await repository.save(escopoSave);
+    
+    }
+
 }
 
 export {EscopoService}

@@ -13,7 +13,8 @@ class ProjetoController{
     async Create(request: Request, response: Response){
         
         const {disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId} = request.body;
-        
+        console.log(disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId);
+
         const projectService = new ProjectService();
         try {
         

@@ -4,10 +4,10 @@ import {Entity,PrimaryColumn} from 'typeorm';
 class EscopoDisciplinas{
 
     @PrimaryColumn()
-    disciplinasId:number;
+    EscopoId: number;
 
     @PrimaryColumn()
-    escopoId:number;
+    OdsId: number;
 
 }
 

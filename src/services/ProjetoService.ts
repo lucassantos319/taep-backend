@@ -13,6 +13,7 @@ import { DisciplinaService } from './DIsciplinaService';
 import { Projeto } from '../entities/Projeto';
 import { EscopoService } from './EscopoService';
 import { ProjetoEscopoService } from './ProjetoEscopoService';
+import { ProjetoTecnologiaService } from './ProjetoTecnologiaService';
 
 
 enum Status{
@@ -48,10 +49,10 @@ class ProjectService{
                 });
 
                 const projectSave = await projectRepository.save(project);
-               
-                this.CreateUserProjectRelation(user,projectSave);
-                this.CreateEscopoProjectRelation({disciplinas,ods,steam,skills},projectSave);
-                this.CreateTecInfoProjectRelation(tecnologias,projectSave);
+
+                await this.CreateUserProjectRelation(user,projectSave);
+                await this.CreateEscopoProjectRelation({disciplinas,ods,steam,skills},projectSave);
+                await this.CreateTecInfoProjectRelation(tecnologias,projectSave);
 
                 return project;
             
@@ -75,6 +76,9 @@ class ProjectService{
     }
 
     async CreateTecInfoProjectRelation(tecnologias,project){
+        
+        const projetoTecnologiaService = new ProjetoTecnologiaService();
+        await projetoTecnologiaService.Create(tecnologias,project);
 
     }
 
@@ -88,7 +92,8 @@ class ProjectService{
         }
         
         await userProject.Create({usersId:user.id,usersEmail:user.email,projectsId:project.id});
-        
+        console.log("ok entrei2");
+
     }
 
     async GetInfoProjects(){
