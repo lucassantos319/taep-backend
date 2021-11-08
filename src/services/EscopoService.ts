@@ -14,15 +14,22 @@ class EscopoService {
         });
 
         const escopoSaveBD = await escopoRepository.save(escopoSave);
-        
+
+        console.log("escopo save")
         const escopoODSService = new EscopoODSService();
         escopoODSService.Create(ods,escopoSaveBD);
+
+        console.log("escopo ods save")
 
         const escopoSteamService = new EscopoSteamService();
         escopoSteamService.Create(steam,escopoSaveBD);
 
+        console.log("escopo steam save")
+
         const escopoSkillsService = new EscopoSkillsService();
         escopoSkillsService.Create(skills,escopoSaveBD);
+
+        console.log("escopo skills save")
 
         return escopoSaveBD;
     }

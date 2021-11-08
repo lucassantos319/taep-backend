@@ -21,6 +21,8 @@ import { EscopoSteamRepository } from '../repositories/EscopoSteamRepository';
 import { EscopoSkillsRepository } from '../repositories/EscopoSkillsRepository';
 import { SteamRepository } from '../repositories/SteamRepository';
 import { SkillsRepository } from '../repositories/SkillsRepository';
+import { ProjetoTecnologiaRepository } from '../repositories/ProjetoTecnologiaRepository';
+import { TecnologiasRepository } from '../repositories/TecnologiasRepository';
 
 
 enum Status{
@@ -58,7 +60,9 @@ class ProjectService{
                 const projectSave = await projectRepository.save(project);
 
                 await this.CreateUserProjectRelation(user,projectSave);
+                console.log("criado user relation");
                 await this.CreateEscopoProjectRelation({disciplinas,ods,steam,skills},projectSave);
+                console.log("criado escopo");
                 await this.CreateTecInfoProjectRelation(tecnologias,projectSave);
 
                 return project;
@@ -113,6 +117,24 @@ class ProjectService{
         return projects;
     }
 
+    async GetInfoTecProjectId(projectId:number){
+        const projectTec = await getCustomRepository(ProjetoTecnologiaRepository)
+        .createQueryBuilder("projeto_tecnologia")
+        .andWhere("projeto_tecnologia.projectId = :id",{id:projectId})
+        .getMany();
+
+        var tecArray = []
+        for ( var i = 0 ; i < projectTec.length; i++ )
+            tecArray.push(projectTec[i].tecnologiaId);
+
+        const tec = await getCustomRepository(TecnologiasRepository)
+        .createQueryBuilder("tecnologias")
+        .andWhere("tecnologias.id IN (:id)",{id:tecArray})
+        .getMany();
+
+        return tec;
+    }
+
     async GetInfoProjectById(projectId:number){
         
         const projects = await getCustomRepository(ProjetoRepository)
@@ -121,6 +143,7 @@ class ProjectService{
         .andWhere("projects.id = :id",{id:projectId})
         .getOne();
         
+        console.log("get info project - ok");
         return projects;
     }
 
@@ -154,35 +177,48 @@ class ProjectService{
         .createQueryBuilder("projeto_escopo")
         .andWhere("projeto_escopo.projectsId = :id",{id:projectId})
         .getOne();
+        console.log("projetoEscopo - ok ");
 
         const escopo = await getCustomRepository(EscopoRepository)
         .createQueryBuilder("escopo")
         .andWhere("escopo.id = :id",{id:projetoEscopo.escopoId})
         .getOne();
 
+        console.log("escopo - ok ");
+
         const escopoODS = await getCustomRepository(EscopoODSRepository)
         .createQueryBuilder("escopo_ods")
         .andWhere("escopo_ods.EscopoId = :id",{id:projetoEscopo.escopoId})
         .getMany();
+
+        console.log("EscopoODS - ok ");
 
         const escopoSteam = await getCustomRepository(EscopoSteamRepository)
         .createQueryBuilder("Escopo_Steam")
         .andWhere("Escopo_Steam.escopoId = :id",{id:projetoEscopo.escopoId})
         .getMany();
 
+        console.log("EscopoSteam - ok ");
+
         var steamArray = []
         for ( var i = 0 ; i < escopoSteam.length; i++ )
             steamArray.push(escopoSteam[i].SteamId);
 
+        console.log(escopoSteam);
+        console.log(steamArray);
         const steam = await getCustomRepository(SteamRepository)
         .createQueryBuilder("Steam")
         .andWhere("Steam.id IN (:id)",{id:steamArray})
         .getMany();
 
+        console.log("steam - ok ");
+
         const escopoSkill = await getCustomRepository(EscopoSkillsRepository)
         .createQueryBuilder("escopo_Skills")
         .andWhere("escopo_Skills.escopoId = :id",{id:projetoEscopo.escopoId})
         .getMany();
+
+        console.log("escopoSkill - ok ");
 
         var skillArray = []
         for (var i = 0 ; i < escopoSkill.length ; i++)
@@ -191,7 +227,9 @@ class ProjectService{
         const skills = await getCustomRepository(SkillsRepository)
         .createQueryBuilder("skills")
         .andWhere("skills.id IN (:id)",{id:skillArray})
-        .getMany();
+        .getMany(); 
+
+        console.log("skills - ok ");
 
         return {
             "escopo":escopo,
@@ -281,3 +319,4 @@ class ProjectService{
 }
 
 export { ProjectService }
+''

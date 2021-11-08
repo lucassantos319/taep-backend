@@ -40,10 +40,11 @@ class ProjetoController{
             const {projectId} = request.params; 
             const projects = await projectService.GetInfoProjectById(Number.parseInt(projectId)); 
             const escopoInfo = await projectService.GetInfoEscopoByProjectId(Number.parseInt(projectId));
-            
+            const tecInfo = await projectService.GetInfoTecProjectId(Number.parseInt(projectId));
             const obj = {
                 "projects":projects,
-                "escopo":escopoInfo
+                "escopo":escopoInfo,
+                "tec":tecInfo
             }
             
             return response.json(obj);
@@ -137,6 +138,7 @@ class ProjetoController{
         try { 
             const {projectId} = request.params; 
             const {title, description,userId} = request.body;
+            console.log(title,description,userId);
             const user = await userService.GetInfoUserById(Number.parseInt(userId));
             const project = await projectService.GetInfoProjectsById(Number.parseInt(projectId));
 
