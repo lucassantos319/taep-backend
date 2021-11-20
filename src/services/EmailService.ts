@@ -9,8 +9,8 @@ class EmailService
             var transport = {
                 host:'smtp.gmail.com',
                 auth:{
-                    user:'taep.2021.server@gmail.com',
-                    pass:'taep@2021'
+                    user:'lss16@inf.ufpr.br',
+                    pass:'Juc@2308'
                 }
             }
     
