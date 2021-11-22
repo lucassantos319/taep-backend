@@ -7,9 +7,10 @@ class EmailService
         if ( emails.length > 0 ){
             
             var transport = {
-                host:'smtp.gmail.com',
+                host:'mx.inf.ufpr.br',
+                port:'587',
                 auth:{
-                    user:'lss16@inf.ufpr.br',
+                    user:'lss16',
                     pass:'Juc@2308'
                 }
             }
@@ -31,7 +32,7 @@ class EmailService
                         from:'"TAEP 4.0" <taep.2021.server@gmail.com>',
                         to: email,
                         subject:{titulo},
-                        html: '<div style="background-color: #162A52;padding-top:20px;padding-bottom:40px;font-family:Arial, Helvetica, sans-serif;text-align: center;"><div style=""><h1 style="color: white;">Bem vindo ao TAEP 4.0</h1></div><div style="margin-top:20px;"><p style="color:white">Seja bem vindo a plataforma do taep, estamos  </p></div></div>'
+                        html: '<div style="background-color: #162A52;padding-top:20px;padding-bottom:40px;font-family:Arial, Helvetica, sans-serif;text-align: center;"><div style=""><h1 style="color: white;">Bem vindo ao TAEP 4.0</h1></div><div style="margin-top:20px;"><p style="color:white">Seja bem vindo a plataforma do taep, estamos a disposição para ajudar no gerenciamento de seus projetos.</p></div></div>'
                    
                     });
                     
