@@ -12,13 +12,12 @@ class ProjetoController{
     
     async Create(request: Request, response: Response){
         
-        const {disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId} = request.body;
-        console.log(disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId);
+        const {disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,materialApoio,desafio,userId} = request.body;
 
         const projectService = new ProjectService();
         try {
         
-            const projeto = await projectService.Create({disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId});
+            const projeto = await projectService.Create({disciplinas,ods,steam,skills,tecnologias,title,turma,description,materialApoio,desafio,objective,userId});
             return response.json(projeto);
 
 

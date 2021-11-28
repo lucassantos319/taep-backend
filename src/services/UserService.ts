@@ -23,7 +23,6 @@ class UserService{
 
         const userRepository = getCustomRepository(UserRepository);
         const userAlreadyExists = await userRepository.findOne({email: email});
-        console.log(first_name, last_name,email, password, user_type,nickname);
 
         if ( userAlreadyExists != null ){
             throw new Error("User already exists!");

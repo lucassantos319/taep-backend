@@ -36,7 +36,7 @@ enum Status{
 
 class ProjectService{
     
-    async Create({disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,userId}){
+    async Create({disciplinas,ods,steam,skills,tecnologias,title,turma,description,objective,materialApoio,desafio,userId}){
         
         try{
 
@@ -53,6 +53,8 @@ class ProjectService{
                     objetivo:objective,
                     turma:turma,
                     descricao:description,
+                    materiaApoio:materialApoio,
+                    desafio:desafio,
                     userCreator:user,
                     status: Status.Inicio,
                 });

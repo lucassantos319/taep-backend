@@ -51,6 +51,12 @@ class Projeto{
     @Column()
     objetivo: string;
 
+    @Column()
+    materialApoio: string;
+
+    @Column()
+    desafio: string;
+
     @ManyToOne(type => User)
     @JoinColumn()
     userCreator: User;
