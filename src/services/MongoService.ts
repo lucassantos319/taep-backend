@@ -4,7 +4,7 @@ class MongoService {
 
     async AddAtividade(title,description,atividadeId,userIdCreator,projetoId,data){
         
-        const uri = "mongodb+srv://atividades_adm:atv@2021@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         client.connect( async (err) => {
             const collection = client.db("taep").collection("atividades_taep");
@@ -16,7 +16,7 @@ class MongoService {
     }
     
     async GetAtividade(userIdCreator,projetoId,data){
-        const uri = "mongodb+srv://atividades_adm:atv@2021@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         client.connect(err => {
             const collection = client.db("taep").collection("atividades_taep");
@@ -30,7 +30,7 @@ class MongoService {
 
     async GetAtividadeByAtividadeId(atividadeId,userIdCreator,projetoId){
       
-        const uri = "mongodb+srv://atividades_adm:atv@2021@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         
         await client.connect();
@@ -44,7 +44,7 @@ class MongoService {
 
     async GetAtividadeByProjectId(projetoId){
         
-        const uri = "mongodb+srv://atividades_adm:atv@2021@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         
         await client.connect();
@@ -57,7 +57,7 @@ class MongoService {
 
     async AddAvaliacao(title,description,atividadeId,userIdCreator,projetoId,data){
         
-        const uri = "mongodb+srv://atividades_adm:atv@2021@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         client.connect( async (err) => {
             const collection = client.db("taep").collection("avaliacoes_taep");
@@ -69,7 +69,7 @@ class MongoService {
     }
     
     async GetAvaliacao(userIdCreator,projetoId,data){
-        const uri = "mongodb+srv://atividades_adm:atv@2021@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         client.connect(err => {
             const collection = client.db("taep").collection("avaliacoes_taep");
@@ -83,7 +83,7 @@ class MongoService {
 
     async GetAvaliacaoByAtividadeId(avaliacaoId,userIdCreator,projetoId){
       
-        const uri = "mongodb+srv://atividades_adm:atv@2021@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         
         await client.connect();
@@ -97,7 +97,7 @@ class MongoService {
 
     async GetAvaliacaoByProjectId(projetoId){
         
-        const uri = "mongodb+srv://atividades_adm:atv@2021@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
         
         await client.connect();
