@@ -4,6 +4,7 @@ import { ProjectService } from '../services/ProjetoService';
 import { TagsService } from "../services/TagsService";
 import { UserService } from '../services/UserService';
 import {AtividadeService} from '../services/AtividadeService';
+import { AvaliacaoService } from "../services/AvaliacaoService";
 import { MongoService } from '../services/MongoService';
 import { UserProjectsService } from "../services/UserProjectsService";
 
@@ -249,6 +250,46 @@ class ProjetoController{
             return response.status(200).json(mongoAtividade);
            
         }catch(error){
+            return (response.status(400).json(error.message))
+        }   
+    }
+    
+    async CriarAvaliacao(request: Request, response: Response){
+
+        try{
+            const mongoService = new MongoService();
+            const avaliacaoService = new AvaliacaoService();
+
+            const {projectId} = request.params;
+            const {title,description,userIdCreator,dataForm} = request.body;
+
+            console.log(title,description)
+            // atividade Id tem que ser colocada 
+
+            const projectIdNumber = Number.parseInt(projectId);
+            const atividade = await avaliacaoService.Create({titulo:title,descricao:description,projectId: projectIdNumber});
+            const mongoAtividade = await mongoService.AddAvaliacao(title,description,atividade.id,userIdCreator,projectIdNumber,dataForm);
+     
+            return response.status(200).json(mongoAtividade);
+           
+        }catch(error){
+            return (response.status(400).json(error.message))
+        }   
+    }
+
+    async GetAvaliacaoByProjectId(request:Request,response:Response){
+        
+        try{
+            const mongoService = new MongoService();
+            const {projectId} = request.params;
+
+            // atividade Id tem que ser colocada 
+            const projectIdNumber = Number.parseInt(projectId);
+            const mongoAtividade = await mongoService.GetAvaliacaoByProjectId(projectIdNumber);
+            
+            return response.status(200).json(mongoAtividade);
+            
+        } catch(error){
             return (response.status(400).json(error.message))
         }   
     }

@@ -14,8 +14,7 @@ class MongoService {
         client.close();
         return true;
     }
-
-
+    
     async GetAtividade(userIdCreator,projetoId,data){
         const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
         const client = new MongoClient(uri);
@@ -50,6 +49,59 @@ class MongoService {
         
         await client.connect();
         const colletion = await client.db("taep").collection("atividades_taep");
+        const data = await colletion.find({projetoId:projetoId}).toArray();
+
+        client.close();
+        return data;
+    }
+
+    async AddAvaliacao(title,description,atividadeId,userIdCreator,projetoId,data){
+        
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const client = new MongoClient(uri);
+        client.connect( async (err) => {
+            const collection = client.db("taep").collection("avaliacao_taep");
+            // perform actions on the collection object
+            await collection.insertOne({title,description,atividadeId,userIdCreator,projetoId,data})
+        });
+        client.close();
+        return true;
+    }
+    
+    async GetAvaliacao(userIdCreator,projetoId,data){
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const client = new MongoClient(uri);
+        client.connect(err => {
+            const collection = client.db("taep").collection("avaliacao_taep");
+            // perform actions on the collection object
+            collection.insertOne({userIdCreator,projetoId,data})
+        });
+        client.close();
+        return true;
+    }
+
+
+    async GetAvaliacaoByAtividadeId(avaliacaoId,userIdCreator,projetoId){
+      
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const client = new MongoClient(uri);
+        
+        await client.connect();
+        const colletion = await client.db("taep").collection("atividades_taep");
+        const data = await colletion.find({atividadeId:avaliacaoId,projectId:projetoId}).toArray();
+
+        client.close();
+        return data;
+
+    }
+
+    async GetAvaliacaoByProjectId(projetoId){
+        
+        const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
+        const client = new MongoClient(uri);
+        
+        await client.connect();
+        const colletion = await client.db("taep").collection("avaliacao_taep");
         const data = await colletion.find({projetoId:projetoId}).toArray();
 
         client.close();
