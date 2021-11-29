@@ -58,12 +58,11 @@ class MongoService {
     async AddAvaliacao(title,description,atividadeId,userIdCreator,projetoId,data){
         
         const uri = "mongodb+srv://atividades_adm:atv123456@atividadetaep.tgnau.mongodb.net/taep?retryWrites=true&w=majority";
-        const avaliacao = true;
         const client = new MongoClient(uri);
         client.connect( async (err) => {
-            const collection = client.db("taep").collection("atividades_taep");
+            const collection = client.db("taep").collection("avaliacao_taep");
             // perform actions on the collection object
-            await collection.insertOne({title,description,atividadeId,avaliacao,userIdCreator,projetoId,data})
+            await collection.insertOne({title,description,atividadeId,userIdCreator,projetoId,data})
         });
         client.close();
         return true;
@@ -89,7 +88,7 @@ class MongoService {
         
         await client.connect();
         const colletion = await client.db("taep").collection("atividades_taep");
-        const data = await colletion.find({atividadeId:avaliacaoId,projectId:projetoId,avaliacao:true}).toArray();
+        const data = await colletion.find({atividadeId:avaliacaoId,projectId:projetoId}).toArray();
 
         client.close();
         return data;
@@ -103,7 +102,7 @@ class MongoService {
         
         await client.connect();
         const colletion = await client.db("taep").collection("atividades_taep");
-        const data = await colletion.find({projetoId:projetoId}).toArray();
+        const data = await colletion.find({projetoId:projetoId,avaliacao:true}).toArray();
 
         client.close();
         return data;
